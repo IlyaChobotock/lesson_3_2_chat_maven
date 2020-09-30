@@ -45,8 +45,8 @@ public class SQLHandler {
                 "       date \n" +
                 "FROM messageData \n" +
                 "WHERE sender = (SELECT id FROM userData WHERE nickname = ?) \n" +
-                "OR receiver = (SELECT id FROM users WHERE nickname = ?) \n" +
-                "OR receiver = (SELECT id FROM users WHERE nickname = 'all')"
+                "OR receiver = (SELECT id FROM userData WHERE nickname = ?) \n" +
+                "OR receiver = (SELECT id FROM userData WHERE nickname = 'all')"
 
         );
     }
@@ -102,7 +102,7 @@ public class SQLHandler {
             psAddMessage.setString(4, date);
             psRegistration.executeUpdate();
             return true;
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
             return false;
         }
     }

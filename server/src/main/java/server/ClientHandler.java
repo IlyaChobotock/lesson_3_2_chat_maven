@@ -47,7 +47,7 @@ public class ClientHandler {
                                     socket.setSoTimeout(0);
 
                                     // дописали код
-                                    sendMsg(SQLHandler.getMessageForNick(nickname));
+//                                    sendMsg(SQLHandler.getMessageForNick(nickname));
                                     // дописали код
 
                                     break;

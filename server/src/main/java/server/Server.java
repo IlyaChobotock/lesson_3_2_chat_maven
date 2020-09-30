@@ -25,7 +25,7 @@ public class Server {
         if (!SQLHandler.connect()) {
             throw new RuntimeException("Не удалось подключиться к базе данных");
         }
-        authService = (AuthService) new DBAuthSevice();
+        authService = new DBAuthService();
 
         // дописали код
 

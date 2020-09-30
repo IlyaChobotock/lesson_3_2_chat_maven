@@ -57,6 +57,10 @@ public class Controller implements Initializable {
     private Stage regStage;
     private RegController regController;
 
+    // дописали код для записи истории в файл
+    private String login;
+    // дописали код для записи истории в файл
+
     public void setAuthenticated(boolean authenticated) {
         this.authenticated = authenticated;
         authPanel.setVisible(!authenticated);
@@ -68,6 +72,11 @@ public class Controller implements Initializable {
 
         if (!authenticated) {
             nickname = "";
+
+            // дописали код для записи истории в файл
+            History.stop();
+            // дописали код для записи истории в файл
+
         }
         textArea.clear();
         setTitle(nickname);
@@ -113,6 +122,14 @@ public class Controller implements Initializable {
                             if (str.startsWith("/authok")) {
                                 nickname = str.split(" ", 2)[1];
                                 setAuthenticated(true);
+
+                                // дописали код для записи истории в файл
+                                // Читаем
+                                textArea.appendText(History.getLast100LinesOfHistory(login));
+                                // Открываем для записи
+                                History.start(login);
+                                // дописали код для записи истории в файл
+
                                 break;
                             }
 
@@ -155,6 +172,10 @@ public class Controller implements Initializable {
 
                             } else {
                                 textArea.appendText(str + "\n");
+
+                                // дописали код для записи истории в файл
+                                History.writeLine(str);
+                                // дописали код для записи истории в файл
                             }
                         }
                     } catch (IOException e) {
@@ -195,6 +216,9 @@ public class Controller implements Initializable {
             out.writeUTF(String.format("/auth %s %s", loginField.getText().trim().toLowerCase(),
                     passwordField.getText().trim()));
             passwordField.clear();
+            // дописали код для записи истории в файл
+            login = loginField.getText();
+            // дописали код для записи истории в файл
 
         } catch (IOException e) {
             e.printStackTrace();
