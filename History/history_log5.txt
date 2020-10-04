@@ -1,0 +1,9 @@
+ 22:04:16 log5 : sdfsdfdf
+ 22:04:17 log5 : sfsdf
+[log5] private [log1] : sdfsfdfsf33333333
+[log5] private [log5] : 22222222222222
+[log1] private [log5] : 22222222222222
+[log1] private [log5] : 3333345353
+ 22:04:44 log1 : 234242
+ 22:04:46 log1 : 3423423423424
+ 22:04:56 log5 : end

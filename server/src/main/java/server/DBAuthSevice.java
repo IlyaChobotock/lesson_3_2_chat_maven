@@ -1,6 +1,6 @@
 package server;
 
-public class DBAuthSevice implements AuthService {
+class DBAuthService implements AuthService {
 
 
     @Override
