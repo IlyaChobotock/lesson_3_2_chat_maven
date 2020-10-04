@@ -18,7 +18,16 @@ public class Server {
 
     public Server() {
         clients = new Vector<>();
-        authService = new SimpleAuthService();
+//        authService = new SimpleAuthService();
+
+        //дописали код
+
+        if (!SQLHandler.connect()) {
+            throw new RuntimeException("Не удалось подключиться к базе данных");
+        }
+        authService = (AuthService) new DBAuthSevice();
+
+        // дописали код
 
         try {
             server = new ServerSocket(PORT);
@@ -34,6 +43,7 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            SQLHandler.disconnect();  // отключаем
             try {
                 server.close();
             } catch (IOException e) {
@@ -50,6 +60,11 @@ public class Server {
         SimpleDateFormat formater = new SimpleDateFormat("HH:mm:ss");
 
         String message = String.format(" %s %s : %s", formater.format(new Date()), sender.getNickname(), msg);
+
+        // дописали код
+        SQLHandler.addMessage(sender.getNickname(), "all", msg, formater.format(new Date()));
+        // дописали код
+
         for (ClientHandler c : clients) {
             c.sendMsg(message);
         }
@@ -60,6 +75,11 @@ public class Server {
         for (ClientHandler c : clients) {
             if (c.getNickname().equals(receiver)) {
                 c.sendMsg(message);
+
+                // дописали код
+                SQLHandler.addMessage(sender.getNickname(), receiver, msg, "однажды..");
+                // дописали код
+
                 if (!c.equals(sender)) {
                     sender.sendMsg(message);
                 }
@@ -91,7 +111,7 @@ public class Server {
         return false;
     }
 
-    private void broadcastClientList() {
+    void broadcastClientList() {
         StringBuilder sb = new StringBuilder("/clientlist ");
         for (ClientHandler c : clients) {
             sb.append(c.getNickname()).append(" ");
